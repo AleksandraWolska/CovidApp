@@ -8,6 +8,10 @@ import { AfterViewInit, Component, } from '@angular/core';
 })
 export class HeaderComponent implements AfterViewInit {
 
+
+  reloadPage() {
+    window.location.reload();
+  }
   constructor() { }
 
   ngAfterViewInit(): void {}

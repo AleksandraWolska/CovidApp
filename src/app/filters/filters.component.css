@@ -92,6 +92,11 @@ h3 {
   color: #aaaaaa;
 }
 
+
+.dropbtn.full {
+  color: #777777;
+}
+
 .dropbtn:after {
   position: absolute;
   content: "";
@@ -162,6 +167,10 @@ h3 {
 
 .type-checkboxes {
   padding-left: 20px;
+}
+
+.error-block p {
+  color: #cc4081;
 }
 
 @media only screen and (max-width: 850px) and (min-width: 600px) {

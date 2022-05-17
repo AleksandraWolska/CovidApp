@@ -3,6 +3,10 @@
   height: calc(100vh - 100px);
 }
 
+a {
+  color: #4ca1af
+}
+
 .dashboard-content {
   display: flex;
   flex-direction: row;
@@ -54,8 +58,15 @@
   margin-bottom: 10px;
 }
 
+#links a {
+  font-size: 1.2em;
+  line-height: 1.5em;
+  color: #4ca1af;
+}
+
 @media only screen and (max-width: 600px) {
   .dashboard-component {
+    text-align: center;
     width: 90vw;
     height: fit-content;
   }

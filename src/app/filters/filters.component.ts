@@ -94,9 +94,11 @@ export class FiltersComponent implements OnInit {
 
 	updateDates = (): void => {
 		if (this.selectedData.dateVariant == 'date-range') {
+			if(this.range.value.start < this.minDate || this.range.value.end > this.maxDate) throw new Error('Invalid Data')
 			this.selectedData.startDate = (this.range.value.start).toISOString()
 			this.selectedData.endDate = (this.range.value.end).toISOString()
 		} else if (this.selectedData.dateVariant == 'date-day') {
+			if(this.day.value < this.minDate || this.day.value > this.maxDate) throw new Error('Invalid Data')
 			this.selectedData.startDate = (this.day.value).toISOString()
 			this.selectedData.endDate = (new Date(new Date(this.day.value).setDate(new Date(this.day.value).getDate() + 1))).toISOString()	//set end date to tomorrow of chosen day
 		} else {
@@ -135,7 +137,7 @@ export class FiltersComponent implements OnInit {
 			console.log(this.selectedData)
 			this.selectEvent.emit(this.selectedData)
 		} catch (error) {
-			this.errorMessages.push("Don't you want to choose date?")
+			this.errorMessages.push("Input correct date")
 		}
 	}
 

@@ -7,7 +7,7 @@
       <h3>Countries</h3>
 
       <div class="dropdown">
-        <div class="dropbtn" (click)="dropToggler(undefined)">select countries</div>
+        <div [className]="this.selectedData.countriesArr.length ? 'dropbtn full' : 'dropbtn'" (click)="dropToggler(undefined)">{{this.selectedData.countriesArr.length ? 'Selected countries: ' + this.selectedData.countriesArr.length : 'Select Countries'}}</div>
         <div class="dropdown-content">
           <div class="list-item" *ngFor="let c of countries">
             <label>
@@ -76,7 +76,7 @@
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="day.hasError('matStartDateInvalid')">Must input value</mat-error>
+          <mat-error *ngIf="day.hasError('matStartDateInvalid')">Must input a value</mat-error>
         </mat-form-field>
       </div>
 

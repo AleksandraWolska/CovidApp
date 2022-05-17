@@ -1,0 +1,43 @@
+.content-component {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.radio-type-container {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+mat-radio-button {
+  margin: 15px;
+}
+
+@media only screen and (max-width: 850px) {
+  .content-component {
+    width: 71vw;
+
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .content-component {
+    width: 100vw;
+    align-items: center;
+
+    flex-direction: column-reverse;
+    padding: 0;
+  }
+
+  .radio-type-container {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}

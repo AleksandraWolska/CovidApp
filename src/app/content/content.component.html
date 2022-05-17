@@ -1,0 +1,23 @@
+<div class="content-component">
+
+  <app-filters [countries]="countries" [selectedData]="selectedData" (selectEvent)="receiveSelected($event)"></app-filters>
+
+  <div class="dashboard">
+    <app-dashboard *ngIf="!chartEnabled && !tableEnabled"> </app-dashboard>
+
+    <div *ngIf="chartEnabled && tableEnabled" class="radio-type-container">
+      <div>
+        <mat-radio-group class="radio-type-switcher" [(ngModel)]="tableChartVariant" aria-label="Select an option">
+          <mat-radio-button color="accent" name="tableChartVariant" [value]="'table'">Table</mat-radio-button>
+          <mat-radio-button name="tableChartVariant" [value]="'chart'">Chart</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+
+    <app-table *ngIf="tableChartVariant == 'table'" [selectedData]="selectedData" [tableNames]="tableNames"
+      [columnHeaders]="columnHeaders" [dataArray]="dataArray"></app-table>
+    <app-chart *ngIf="tableChartVariant == 'chart'" [countries]="countries" [selectedData]="selectedData"
+      [dataArray]="dataArray"></app-chart>
+
+  </div>
+</div>

@@ -1,0 +1,49 @@
+.table-component {
+  width: 71vw;
+  border-radius: 10px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 200%
+  );
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 5px 0 15px;
+}
+
+table {
+  width: 98%;
+}
+
+.mat-paginator {
+  width: 98%;
+}
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+}
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+@media only screen and (max-width: 600px) {
+  .table-component {
+    width: 90vw;
+    border-radius: 10px;
+
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0) 200%
+    );
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+  }
+}

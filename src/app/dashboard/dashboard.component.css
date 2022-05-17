@@ -1,0 +1,89 @@
+.dashboard-component {
+  width: 71vw;
+  height: calc(100vh - 100px);
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.dashboard-content h1 {
+  font-weight: 500;
+}
+
+.dashboard-content div {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0) 300%
+  );
+  border-radius: 10px;
+
+  width: 40%;
+  padding: 5%;
+  margin: 10px;
+}
+
+.how-start {
+  text-transform: uppercase;
+  font-family: "Anton", sans-serif;
+  font-size: 2em;
+  margin: 25px 0px;
+  line-height: 1em;
+}
+
+@media only screen and (max-width: 800px) {
+  .dashboard-component {
+    width: 71vw;
+    height: fit-content;
+  }
+
+  .dashboard-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+}
+.dashboard-content div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .dashboard-component {
+    width: 90vw;
+    height: fit-content;
+  }
+
+  .dashboard-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+
+  .dashboard-content div {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0) 300%
+    );
+    border-radius: 10px;
+
+    width: 90%;
+
+    margin: 10px 0px;
+  }
+
+  .how-start {
+    text-transform: uppercase;
+    font-family: "Anton", sans-serif;
+    margin: 5px 5px 5px 5px;
+    line-height: 1em;
+  }
+}

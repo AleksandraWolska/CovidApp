@@ -1,0 +1,126 @@
+<div class="filters-component">
+  <div class="filters-container">
+
+    <h2>Filters</h2>
+
+    <div class="filter-item">
+      <h3>Countries</h3>
+
+      <div class="dropdown">
+        <div class="dropbtn" (click)="dropToggler(undefined)">select countries</div>
+        <div class="dropdown-content">
+          <div class="list-item" *ngFor="let c of countries">
+            <label>
+              <div class="country-item" [ngClass]="isChecked(c.Slug)">
+
+                <input name="countries" value="{{c.Slug}}" type="checkbox" (change)="includeCountry(c.Slug);" />
+                {{c.Country}}
+
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="filter-item">
+      <h3>Case type:</h3>
+      <div class="type-checkboxes">
+        <div>
+
+          <label for="Confirmed">
+            <input id="Confirmed" value="Confirmed" type="checkbox" (change)="includeCaseType('Confirmed')" />
+            Confirmed
+          </label>
+        </div>
+        <div>
+
+          <label for="Deaths">
+            <input id="Deaths" value="Deaths" type="checkbox" (change)="includeCaseType('Deaths')" />
+            Deaths
+          </label>
+        </div>
+
+        <div>
+
+          <label for="Active">
+            <input id="Active" value="Active" type="checkbox" [disabled]="dateVariant == 'date-total'"
+              (change)="includeCaseType('Active')" />
+            Active
+          </label>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="filter-item">
+
+      <h3>Date:</h3>
+      <mat-radio-group class="date-radio" (ngModelChange)="updateDateVariant()" [(ngModel)]="dateVariant"
+        aria-label="Select an option">
+        <mat-radio-button name="dateVariant" [value]="'date-total'">Total</mat-radio-button>
+        <mat-radio-button name="dateVariant" [disabled]="isCountriesEmpty()" [value]="'date-day'">Pick day
+        </mat-radio-button>
+        <mat-radio-button name="dateVariant" [disabled]="isCountriesEmpty()" [value]="'date-range'">Pick date range
+        </mat-radio-button>
+      </mat-radio-group>
+
+
+      <div *ngIf="dateVariant == 'date-day'">
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input required matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [formControl]="day"
+            (dateChange)="updateDay($event)">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="day.hasError('matStartDateInvalid')">Must input value</mat-error>
+        </mat-form-field>
+      </div>
+
+
+
+      <div *ngIf="dateVariant == 'date-range'">
+        <div>
+          <input id="fullRange" (change)="toggleFullRange($event)" value="fullRange" type="checkbox" />
+          <label for="fullRange">Choose full range</label>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <div>
+            </div>
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker" [min]="minDate" [max]="maxDate">
+              <input required matStartDate formControlName="start" placeholder="From date">
+              <input required matEndDate formControlName="end" placeholder="To date" (dateChange)="updateDates()">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+
+            <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">Must input start value
+            </mat-error>
+            <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            <mat-error *ngIf="range.controls['end'].hasError('required')">Must input a value</mat-error>
+          </mat-form-field>
+        </div>
+
+
+      </div>
+    </div>
+    <div>
+      <div class="btn-grad" (click)="applyFilters()">
+        Show data
+      </div>
+    </div>
+    <div class="error-block">
+      <p *ngFor="let err of errorMessages">{{err}}</p>
+    </div>
+
+
+
+  </div>
+</div>

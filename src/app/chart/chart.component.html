@@ -1,0 +1,12 @@
+<div>
+  <div *ngIf="display" class="chart-component">
+    <div class="col-lg-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <canvas baseChart [chartType]="'bar'" [datasets]="barChartData" [labels]="barChartLabels"
+            [options]="barChartOptions" [colors]="barChartColors"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

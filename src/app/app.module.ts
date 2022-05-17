@@ -15,8 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 
 
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContentComponent } from './content/content.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -38,7 +36,7 @@ import { ChartComponent } from './chart/chart.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+
     ChartsModule,
     HttpClientModule,
     FormsModule,

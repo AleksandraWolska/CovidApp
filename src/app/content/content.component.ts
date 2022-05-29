@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SelectedData } from '../filters/filters.component';
+import { firstValueFrom } from 'rxjs';
 
 
 // API data formats ----------------------------------------------------------------------------------------
@@ -112,6 +113,8 @@ export class ContentComponent implements OnInit {
 	}
 
 	allCountriesTotalDate = () => {
+		
+		console.log("Haloo4!")
 		this.clearTableData()
 
 		let copiedArray = [...this.selectedData.typeArr]
@@ -131,6 +134,7 @@ export class ContentComponent implements OnInit {
 
 
 	oneCountry() {
+		console.log("Haloo3!")
 		let address = "https://api.covid19api.com/total/country/" + this.selectedData.countriesArr[0] + "?from=" + this.selectedData.startDate + "&to=" + this.selectedData.endDate
 		this.httpClient.get<CountryTotal[]>(address).subscribe(
 			response => {
@@ -152,21 +156,25 @@ export class ContentComponent implements OnInit {
 
 
 
-	async fetchCountryData(country: string, fromDate: string, toDate: string, tempArray: CountryTotal[]) {
-		let address = "https://api.covid19api.com/total/country/" + country + "?from=" + fromDate + "&to=" + toDate
-		await this.httpClient.get<CountryTotal[]>(address).subscribe(response => {
-			tempArray.push(...response)
-		}
-		)
-	}
+	// async fetchCountryData(country: string, fromDate: string, toDate: string, tempArray: CountryTotal[]) {
+	// 	let address = "https://api.covid19api.com/total/country/" + country + "?from=" + fromDate + "&to=" + toDate
+	// 	console.log('galo' + country)
+	// 	let response = await firstValueFrom(this.httpClient.get<CountryTotal[]>(address))
+
+	// 	await console.log(response)
+	// 	await tempArray.push(...response)
+		
+	// }
 
 
 
 	async moreCountriesTotalOneDate() {
-
+		console.log("Haloo!")
 		let tempDataArray: CountryTotal[] = []
-		for (let i = 0; i < this.selectedData.countriesArr.length; i++) {
-			await this.fetchCountryData(this.selectedData.countriesArr[i], this.selectedData.startDate, this.selectedData.endDate, tempDataArray)
+		for (const country of this.selectedData.countriesArr) {
+			let address = "https://api.covid19api.com/total/country/" + country + "?from=" + this.selectedData.startDate + "&to=" + this.selectedData.endDate
+			let response = await firstValueFrom(this.httpClient.get<CountryTotal[]>(address))
+			tempDataArray.push(...response)
 		}
 
 		this.clearTableData()
@@ -177,6 +185,7 @@ export class ContentComponent implements OnInit {
 			this.tableNames.push((new Date(this.selectedData.startDate)).toLocaleDateString())
 
 		this.columnHeaders[0] = ["Country", ...this.selectedData.typeArr]
+		
 		this.dataArray = tempDataArray
 		this.tableChartVariant = 'table'
 
@@ -184,12 +193,17 @@ export class ContentComponent implements OnInit {
 
 
 
-	async moreCountriesRangeDateOneType() {
 
+
+
+	async moreCountriesRangeDateOneType() {
+		console.log("Haloo2!")
 		let tempDataArray: CountryTotal[] = []
 		
-		for (let i = 0; i < this.selectedData.countriesArr.length; i++) {
-			await this.fetchCountryData(this.selectedData.countriesArr[i], this.selectedData.startDate, this.selectedData.endDate, tempDataArray)
+		for (const country of this.selectedData.countriesArr) {
+			let address = "https://api.covid19api.com/total/country/" + country + "?from=" + this.selectedData.startDate + "&to=" + this.selectedData.endDate
+			let response = await firstValueFrom(this.httpClient.get<CountryTotal[]>(address))
+			tempDataArray.push(...response)
 		}
 
 		this.clearTableData()

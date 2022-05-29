@@ -130,7 +130,7 @@ export class ContentComponent implements OnInit {
 	}
 
 
-	oneCountry = () => {
+	oneCountry() {
 		let address = "https://api.covid19api.com/total/country/" + this.selectedData.countriesArr[0] + "?from=" + this.selectedData.startDate + "&to=" + this.selectedData.endDate
 		this.httpClient.get<CountryTotal[]>(address).subscribe(
 			response => {
@@ -152,63 +152,61 @@ export class ContentComponent implements OnInit {
 
 
 
-	moreCountriesTotalOneDate = () => {
-
-		let tempDataArray: CountryTotal[] = []
-		for (let i = 0; i < this.selectedData.countriesArr.length; i++) {
-			let address = "https://api.covid19api.com/total/country/" + this.selectedData.countriesArr[i] + "?from=" + this.selectedData.startDate + "&to=" + this.selectedData.endDate
-			this.httpClient.get<CountryTotal[]>(address).subscribe(response => {
-				tempDataArray.push(...response)
-			}
-			)
+	async fetchCountryData(country: string, fromDate: string, toDate: string, tempArray: CountryTotal[]) {
+		let address = "https://api.covid19api.com/total/country/" + country + "?from=" + fromDate + "&to=" + toDate
+		await this.httpClient.get<CountryTotal[]>(address).subscribe(response => {
+			tempArray.push(...response)
 		}
-
-		setTimeout(() => {					//I wanted to fetch data "angular way", without promises (and .toPromise() as it is deprecated)
-											//Fetching here is done in a for loop (each country) and I can't really get it right so I'll just delay subsequent lines
-			this.clearTableData()
-			this.tableEnabled = true
-			this.chartEnabled = (this.selectedData.typeArr.length <= 1)
-			this.selectedData.dateVariant == "date-total" ?
-				this.tableNames.push("Total") :
-				this.tableNames.push((new Date(this.selectedData.startDate)).toLocaleDateString())
-
-			this.columnHeaders[0] = ["Country", ...this.selectedData.typeArr]
-			this.dataArray = tempDataArray
-			this.tableChartVariant = 'table'
-		}, 400
 		)
 	}
 
 
 
-	moreCountriesRangeDateOneType = () => {
+	async moreCountriesTotalOneDate() {
 
 		let tempDataArray: CountryTotal[] = []
 		for (let i = 0; i < this.selectedData.countriesArr.length; i++) {
-			let address = "https://api.covid19api.com/total/country/" + this.selectedData.countriesArr[i] + "?from=" + this.selectedData.startDate + "&to=" + this.selectedData.endDate
-			console.log(address)
-			this.httpClient.get<CountryTotal[]>(address).subscribe(response => {
-				tempDataArray.push(...response)
-			}
-			)
+			await this.fetchCountryData(this.selectedData.countriesArr[i], this.selectedData.startDate, this.selectedData.endDate, tempDataArray)
 		}
 
-		setTimeout(() => {
-			this.clearTableData()
-			this.tableChartVariant = 'chart'
-			this.tableEnabled = false
-			this.chartEnabled = true
-			this.tableNames.push(this.selectedData.typeArr[0])
-			let tempCountriesArray = this.countries.filter((c) => { return this.selectedData.countriesArr.includes(c.Slug) })
-			let tempArray = tempCountriesArray.map((c) => c.Country)
-			this.columnHeaders.push(["Date", ...tempArray])
-			this.dataArray = tempDataArray
+		this.clearTableData()
+		this.tableEnabled = true
+		this.chartEnabled = (this.selectedData.typeArr.length <= 1)
+		this.selectedData.dateVariant == "date-total" ?
+			this.tableNames.push("Total") :
+			this.tableNames.push((new Date(this.selectedData.startDate)).toLocaleDateString())
 
-		}, 400)
+		this.columnHeaders[0] = ["Country", ...this.selectedData.typeArr]
+		this.dataArray = tempDataArray
+		this.tableChartVariant = 'table'
+
 	}
 
 
-	
+
+	async moreCountriesRangeDateOneType() {
+
+		let tempDataArray: CountryTotal[] = []
+		
+		for (let i = 0; i < this.selectedData.countriesArr.length; i++) {
+			await this.fetchCountryData(this.selectedData.countriesArr[i], this.selectedData.startDate, this.selectedData.endDate, tempDataArray)
+		}
+
+		this.clearTableData()
+		this.tableChartVariant = 'chart'
+		this.tableEnabled = false
+		this.chartEnabled = true
+		this.tableNames.push(this.selectedData.typeArr[0])
+		let tempCountriesArray = this.countries.filter((c) => { return this.selectedData.countriesArr.includes(c.Slug) })
+		let tempArray = tempCountriesArray.map((c) => c.Country)
+		this.columnHeaders.push(["Date", ...tempArray])
+		this.dataArray = tempDataArray
+
+
+	}
+
+
+
 	moreCountriesRangeDateMoreTypes = () => {
 		//https://api.covid19api.com/total/country/:country  foreach loop country
 		//not yet implemented
